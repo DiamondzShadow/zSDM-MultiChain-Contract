@@ -3,8 +3,14 @@ const bip39 = require('bip39');
 const { derivePath } = require('ed25519-hd-key');
 const fs = require('fs');
 
-const targetPublicKey = "ADhVqeQJikfAd86Pi1zYnGeVBkMAmz2n9ttSyHcs14ut";
-const mnemonic = "believe drift mother upgrade length sample chair lonely cradle risk calm soup";
+const targetPublicKey = process.env.SOLANA_PUBLIC_KEY || "YOUR_PUBLIC_KEY_HERE";
+const mnemonic = process.env.SOLANA_MNEMONIC;
+
+if (!mnemonic) {
+  console.error("❌ Error: SOLANA_MNEMONIC environment variable is required");
+  console.error("   Set it with: export SOLANA_MNEMONIC='your twelve word mnemonic phrase here'");
+  process.exit(1);
+}
 
 // Try different derivation paths to find the correct one
 const paths = [
