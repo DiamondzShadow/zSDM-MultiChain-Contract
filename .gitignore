@@ -29,3 +29,13 @@ broadcast/
 
 # Add any other files containing sensitive data (optional)
 secrets.txt
+
+# Keypair files (contain secret keys - never commit!)
+**/deploy_keypair.json
+**/keypair.json
+**/*_keypair.json
+**/id.json
+**/*.pem
+
+# Wallet files
+**/wallet.json

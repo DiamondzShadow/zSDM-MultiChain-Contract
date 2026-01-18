@@ -2,8 +2,14 @@ const { Keypair } = require('@solana/web3.js');
 const bs58 = require('bs58');
 const fs = require('fs');
 
-// Your private key
-const privateKeyBase58 = "4W7HPgTJwaLpwbvhnw34r5mSqUUwUpsdEeXH2JCkJBYy2uA3Hpk4pRLb8UZTLoBgFEnrEzMNSdtzTWCr8cMcfHS8";
+// Private key from environment variable (never hardcode!)
+const privateKeyBase58 = process.env.SOLANA_PRIVATE_KEY;
+
+if (!privateKeyBase58) {
+  console.error("❌ Error: SOLANA_PRIVATE_KEY environment variable is required");
+  console.error("   Set it with: export SOLANA_PRIVATE_KEY='your-base58-private-key'");
+  process.exit(1);
+}
 
 try {
   // Decode the base58 private key
@@ -15,7 +21,7 @@ try {
   console.log('Public Key:', keypair.publicKey.toString());
   
   // Verify this matches your expected public key
-  const expectedPublicKey = "ADhVqeQJikfAd86Pi1zYnGeVBkMAmz2n9ttSyHcs14ut";
+  const expectedPublicKey = process.env.SOLANA_PUBLIC_KEY;
   if (keypair.publicKey.toString() === expectedPublicKey) {
     console.log('✅ Public key matches expected address!');
   } else {
